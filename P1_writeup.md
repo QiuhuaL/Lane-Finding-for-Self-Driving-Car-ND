@@ -42,11 +42,9 @@ I chose a trapezoid as the mask to only keep those edges in the region of intere
 ![alt text][image_masked_edges]
 
 * Draw the left and right lane line:<br/>
-In order to draw a single line on the left and right lanes, I calculated the slopes of the line segments and grouped them together as the left and right lane segments depending on whether the slopes are negative and postive. Then using the average slope and interception of those left and right segments to draw the lines. The minimum value for coordinate y is find by the minimum y of all those segments.
-
-While the negative and postive slopes seperation work for the first two videos, I found it did not work well for the frames in the challenge video because after Hough detection, there are a lot of noise segments in the line detection results from tree shadows etc. To get rid of those outliers, I only kept those with slopes in [-0.85, -0.65] for the left lane line and [0.40,.80] for the right. 
-
-To avoid the two drawed lines crossing each other on the top, I further limited the length of the lines so that all the x coordinates on the left lines are smaller than those on the right lines.
+In order to draw a single line on the left and right lanes, first calculate the slopes of the line segments and grouped them together as the left and right lane segments depending on whether the slopes are negative and postive. Then using the average slope and interception of those left and right segments to draw the lines. The minimum value for coordinate y is find by the minimum y of all those segments.<br/><br/>
+While the negative and postive slopes seperation work for the first two videos, it did not work well for the frames in the challenge video because after Hough detection. There are a lot of noise segments in the line detection results from tree shadows etc. To get rid of those outliers, only line segements with slopes in [-0.85, -0.65] for the left and [0.40,.80] for the right were kept. <br/><br/>
+To avoid the two drawed lines crossing each other on the top, the length of the lines are further limited so that all the x coordinates on the left lines are smaller than those on the right lines.
 
 ![alt text][image_hough]
 
