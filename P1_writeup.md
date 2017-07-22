@@ -38,30 +38,32 @@ The Canny edge image:
 ![alt text][image_edges]
 
 * Create the masked edges image:<br/>
-I chose a trapezoid as the mask to only keep those edges in the region of interest, and get rig of the outlier line segements outside of the region: 
+A trapezoid maskk was chosen as to keep only those edges in the region of interest, and get rig of the outlier line segements outside of the region. <br/><br/>
+The four corners of the trapezoid was chosen with some ratios of the length and width of the image, while the ratios are hard coded values.
 ![alt text][image_masked_edges]
 
 * Draw the left and right lane line:<br/>
-In order to draw a single line on the left and right lanes, first calculate the slopes of the line segments and grouped them together as the left and right lane segments depending on whether the slopes are negative and postive. Then using the average slope and interception of those left and right segments to draw the lines. The minimum value for coordinate y is find by the minimum y of all those segments.<br/><br/>
-While the negative and postive slopes seperation work for the first two videos, it did not work well for the frames in the challenge video because after Hough detection. There are a lot of noise segments in the line detection results from tree shadows etc. To get rid of those outliers, only line segements with slopes in [-0.85, -0.65] for the left and [0.40,.80] for the right were kept. <br/><br/>
+In order to draw a single line on the left and right lanes, first calculate the slopes of the line segments and grouped them together as the left and right lane segments depending on whether the slopes are negative and postive. Then using the average slope and interception of those left and right segments to draw the lines. The minimum value for coordinate y is found by the minimum y of all those segments.<br/><br/>
+While the negative and postive slopes seperation work for the first two videos, it did not work well for the frames in the challenge video because there are a lot of outlier line segements in the Hough line detection, resulting from tree shadows etc. To get rid of those outliers, only those line segements with slopes in [-0.85, -0.65] for the left and [0.40,.80] for the right were kept and the outliers were filtered out. <br/><br/>
 To avoid the two drawed lines crossing each other on the top, the length of the lines are further limited so that all the x coordinates on the left lines are smaller than those on the right lines.
-
 ![alt text][image_hough]
 
 * Draw the left and right lines on the original image:<br/>
 ![alt text][image_result]
 
 ### 2. Identify potential shortcomings with your current pipeline
-While my current pipeline worked on the two required videos and worked quite well on the challenge video, it did not do a good detection of the lanes on several frames in the challenge video. In one frame, the left yellow lane is not apparent with tree shadow. It indicates that the current pipeline might not work well with different light condition, complicated scenes, and heavy traffics.
+While the current pipeline worked on the two required videos and worked quite well on the challenge video, it did not do a good finding on several frames in the challenge video. In one frame, the left yellow lane is not so bright because of the tree shadows. This missing detection indicates that the current pipeline will not work well with complicated images, such as images with different light conditions, images with complicated scenes, and images with heavy traffic.
 
-There is another missing detection of the right white lane in the challenge video. In this frame, the right white lane only shows several white points in the lower bottom, while the upper right has clear curved lane lines. This shows that the pipleline does not work well with curvatured roads and lane lines. 
+The right white lane in one of the frames in the challenge video was not found with the pipeline. In this frame, the right white lane were only visiable as several white points in the lower bottom of the image. Although the lane could be easiuly identified with eyes onb the upper right part, it is not a straight line, but has a large curvature. This shows that the pipleline does not work well with curvatured roads and/or lane lines. 
 
-Another limitation of the pipe line is that it has many hard coded paramters, such as the position of the ROI, the limit of the slopes to group left and right lanes together.
+Another limitation of the pipe line is that it has many hard coded paramters, such as the threshld to choose the white color, the position of the ROI and the limit of the slopes to group left and right lanes together.
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to fit the lane lines with a curve rather than the straight line.  By doing this, it would improve the possibility to not miss the white right lane mentioned above. 
+A possible improvement would be to fit the lane lines with other shaped curves rather than simply straight line.  By doing this, it would improve the detection of curved lanes on the road. 
 
-My pipe line only uses use the lower and upper thresholds that is good to detect white lanes. One potential improvement could be to convert the original RGB images into HSV space, and apply thresholds to keep the pixels with yellow color and this would enhance the detection for yellow lane lines.
+The current pipe line only uses use the lower and upper thresholds that is good to choose the white color. One potential improvement is to choose both white color and yellow color. One idea would be converting the original RGB images into HSV space, and apply thresholds to keep the pixels with yellow and white colors. This would enhance the detection for yellow lane lines.
 
-The region of interest for the mask was the same trapezoid for all the videos frames in my current pipeline. It would be possible to have a dynamic moving region of interest for each image frame.
+The region of interest for the mask was the same trapezoid for all the videos frames in the current pipeline. It would be possible to have a dynamic moving region of interest for each image frame based on intensity analysis of the images. OTher hard coded parameters could potentially be changed to dynamic values too for better results. 
+
+
