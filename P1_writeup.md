@@ -1,6 +1,4 @@
-# **Finding Lane Lines on the Road** 
-
-**CarND Project 1: Finding Lane Lines on the Road**
+# **Self Driving Car ND Project 1: Finding Lane Lines on the Road** 
 
 The goals / steps of this project are the following:
 * Make a pipeline that finds lane lines on the road
@@ -8,7 +6,7 @@ The goals / steps of this project are the following:
 
 
 [//]: # (Image References)
-[image_orig]: ./test_images_output/solidYellowCurve.jpg "Original"
+[image_orig]: ./test_images/solidYellowCurve.jpg "Original"
 [image_gray]: ./test_images_output/solidYellowCurve_gray.jpg "Grayscale"
 [image_gaussian]: ./test_images_output/solidYellowCurve_guassian.jpg "Gausian"
 [image_edges]: ./test_images_output/solidYellowCurve_edges.jpg "Canny Edges"
@@ -21,7 +19,7 @@ The goals / steps of this project are the following:
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-My pipeline consisted of the following steps:
+My pipeline consists the following steps:
 
 (1) Convert the original image into grayscale. Using solidYellowCurve.jpg as an example, the original image:
 ![alt text][image_orig]
@@ -44,12 +42,14 @@ While the negative and postive slopes seperation work for the first two videos, 
 ![alt text][image_hough]
 
 (6)Draw the left and right lines on the original image:
-![alt text][image_result]  
+![alt text][image_result]
 
 ### 2. Identify potential shortcomings with your current pipeline
 While my current pipeline worked on the two required videos and worked quite well on the challenge video, it did not do a good detection of the lanes on several frames in the challenge video. In one frame, the left yellow lane is not apparent with tree shadow. It indicates that the current pipeline might not work well with different light condition, complicated scenes, and heavy traffics.
 
 There is another missing detection of the right white lane in the challenge video. In this frame, the right white lane only shows several white points in the lower bottom, while the upper right has clear curved lane lines. This shows that the pipleline does not work well with curvatured roads and lane lines. 
+
+Another limitation of the pipe line is that it has many hard coded paramters, such as the position of the ROI, the limit of the slopes to group left and right lanes together.
 
 ### 3. Suggest possible improvements to your pipeline
 
@@ -57,6 +57,4 @@ A possible improvement would be to fit the lane lines with a curve rather than t
 
 My pipe line only uses use the lower and upper thresholds that is good to detect white lanes. One potential improvement could be to convert the original RGB images into HSV space, and apply thresholds to keep the pixels with yellow color and this would enhance the detection for yellow lane lines.
 
-The region of interest for the mask was kept the same trapezoid for all the videos frames in my current pipeline. It would be possible to have a dynamic moving region of interest for each image frame.
-
-# Lane-Finding-for-Self-Driving-Car-ND
+The region of interest for the mask was the same trapezoid for all the videos frames in my current pipeline. It would be possible to have a dynamic moving region of interest for each image frame.
