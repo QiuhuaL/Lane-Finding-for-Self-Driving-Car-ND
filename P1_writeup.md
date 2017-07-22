@@ -16,32 +16,32 @@ The goals / steps of this project are the following:
 
 ### Reflection
 
-### Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
+### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
 My pipeline consists the following steps:
 
-# 1.Convert the original image into grayscale. Using solidYellowCurve.jpg:
+1. Convert the original image into grayscale. 
 As an example, here is the original image SolidYellowCurve.jpg, one of the test images:
 ![alt text][image_orig]
 After converting it to gray scale:
 ![alt text][image_gray]
 
-# 2. Apply Gaussian kernel smoothing/blurring:
+2. Apply Gaussian kernel smoothing/blurring:
 The kernel size I chose for Gaussian smoothing is 3. 
 ![alt text][image_gaussian]
 
-# 3. Edges detetion with Canny algorithm: 
+3. Edges detetion with Canny algorithm: 
 This is to find the candidates of line segments and the parameters that I chose are:
 low_threshold = 50
 high_threshold = 150
 The Canny edge image: 
 ![alt text][image_edges]
 
-# 4. Create the masked edges image:
+4. Create the masked edges image:
 I chose a trapezoid as the mask to only keep those edges in the region of interest, and get rig of the outlier line segements outside of the region: 
 ![alt text][image_masked_edges]
 
-# 5. Draw the left and right lane line:
+5. Draw the left and right lane line:
 In order to draw a single line on the left and right lanes, I calculated the slopes of the line segments and grouped them together as the left and right lane segments depending on whether the slopes are negative and postive. Then using the average slope and interception of those left and right segments to draw the lines. The minimum value for coordinate y is find by the minimum y of all those segments.
 
 While the negative and postive slopes seperation work for the first two videos, I found it did not work well for the frames in the challenge video because after Hough detection, there are a lot of noise segments in the line detection results from tree shadows etc. To get rid of those outliers, I only kept those with slopes in [-0.85, -0.65] for the left lane line and [0.40,.80] for the right. 
@@ -50,17 +50,17 @@ To avoid the two drawed lines crossing each other on the top, I further limited 
 
 ![alt text][image_hough]
 
-# 6. Draw the left and right lines on the original image:
+6. Draw the left and right lines on the original image:
 ![alt text][image_result]
 
-### Identify potential shortcomings with your current pipeline
+### 2. Identify potential shortcomings with your current pipeline
 While my current pipeline worked on the two required videos and worked quite well on the challenge video, it did not do a good detection of the lanes on several frames in the challenge video. In one frame, the left yellow lane is not apparent with tree shadow. It indicates that the current pipeline might not work well with different light condition, complicated scenes, and heavy traffics.
 
 There is another missing detection of the right white lane in the challenge video. In this frame, the right white lane only shows several white points in the lower bottom, while the upper right has clear curved lane lines. This shows that the pipleline does not work well with curvatured roads and lane lines. 
 
 Another limitation of the pipe line is that it has many hard coded paramters, such as the position of the ROI, the limit of the slopes to group left and right lanes together.
 
-### Suggest possible improvements to your pipeline
+### 3. Suggest possible improvements to your pipeline
 
 A possible improvement would be to fit the lane lines with a curve rather than the straight line.  By doing this, it would improve the possibility to not miss the white right lane mentioned above. 
 
