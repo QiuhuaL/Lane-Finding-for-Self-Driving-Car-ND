@@ -1,1 +1,2 @@
-# Lane Finding Projec for Self Driving Car ND
+# Self Driving Car ND Project 1: 
+Lane Finding For Self Driving Cars
