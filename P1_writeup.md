@@ -14,8 +14,6 @@ The goals / steps of this project are the following:
 [image_hough]: ./test_images_output/solidYellowCurve_Houghline.jpg "Hough"
 [image_result]: ./test_images_output/solidYellowCurve_result.jpg "Result"
 
-### Reflection
-
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
 My pipeline consists the following steps:
